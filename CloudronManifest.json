@@ -1,0 +1,23 @@
+{
+  "id": "com.example.test",  // ID par défaut, à garder
+  "title": "Example FastAPI Application", // Titre par défaut
+  "author": "Corentin",
+  "description": "This is an example python app", // Description par défaut
+  "tagline": "A great coding adventure", // Tagline par défaut
+  "version": "0.0.1", // Version par défaut
+  "healthCheckPath": "/", // Chemin par défaut
+  "httpPort": 8001, // Port par défaut
+  "addons": {
+    "localstorage": {}, // Addons par défaut
+    "ldap": {},
+    "proxyAuth": {}
+  },
+  "manifestVersion": 2, // Version par défaut
+  "website": "https://www.example.com", // Lien par défaut, peut être laissé
+  "contactEmail": "support@cloudron.io", // Email de contact par défaut
+  "icon": "file://icon.png", // Chemin vers l'icône par défaut
+  "tags": ["test", "collaboration"], // Tags par défaut
+  "mediaLinks": [
+    "https://images.rapgenius.com/fd0175ef780e2feefb30055be9f2e022.520x343x1.jpg" // Lien par défaut
+  ]
+}
