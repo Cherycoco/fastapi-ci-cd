@@ -1,12 +1,12 @@
 {
   "id": "com.example.fastapi",
-  "title": "FastAPI Application",
-  "author": "Votre Nom",
-  "description": "Une application FastAPI déployée sur Cloudron",
-  "tagline": "Déploiement FastAPI simplifié",
+  "title": "Example FastAPI Application",
+  "author": "Benjamin",
+  "description": "This is an example python app",
+  "tagline": "A great coding adventure",
   "version": "0.0.1",
   "healthCheckPath": "/",
-  "httpPort": 8000,
+  "httpPort": 8001,
   "addons": {
     "localstorage": {},
     "ldap": {},
@@ -14,7 +14,9 @@
   },
   "manifestVersion": 2,
   "website": "https://www.example.com",
-  "contactEmail": "support@example.com",
+  "contactEmail": "support@cloudron.io",
   "icon": "file://icon.png",
-  "tags": ["fastapi", "cloudron", "ci-cd"]
+  "tags": ["test", "collaboration"],
+  "mediaLinks": ["https://images.rapgenius.com/fd0175ef780e2feefb30055be9f2e022.520x343x1.jpg"]
 }
+
