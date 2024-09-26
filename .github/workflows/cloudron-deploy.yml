@@ -2,38 +2,31 @@ name: Cloudron Auto Deployment
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Build Docker Image
+      - uses: actions/checkout@v3 # Utilisez la dernière version
+      - name: Environment Setup
+        uses: actions/setup-node@v3 # Mettez à jour vers la version 3
+        with:
+          node-version: '20' # Utilisez la version 20 de Node.js
+      - name: Deploy setup
+        run: npm install -g cloudron
+      - name: Update App
         run: |
-          docker build -t cherycoco/fastapi-app:latest .
-
-      - name: Push to Docker Hub
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker push cherycoco/fastapi-app:latest
-
-      - name: Deploy to Cloudron
-        env:
-          CLOUDRON_SERVER: ${{ secrets.CLOUDRON_SERVER }}
-          CLOUDRON_TOKEN: ${{ secrets.CLOUDRON_TOKEN }}
-          CLOUDRON_APP: ${{ secrets.CLOUDRON_APP }}
-        run: |
-          cloudron update --no-wait \
-            --server $CLOUDRON_SERVER \
-            --token $CLOUDRON_TOKEN \
-            --app $CLOUDRON_APP \
-            --image cherycoco/fastapi-app:latest
-
+          update="cloudron update --no-wait \
+            --server ${{ secrets.CLOUDRON_SERVER }} \
+            --token ${{ secrets.CLOUDRON_TOKEN }} \
+            --app ${{ secrets.CLOUDRON_APP }} \
+            --image ${{ secrets.DOCKER_IMAGE }}"
+          # Retry up to 5 times (with linear backoff)
+          NEXT_WAIT_TIME=0
+          until [ $NEXT_WAIT_TIME -eq 5 ] || $update; do
+              sleep $(( NEXT_WAIT_TIME++ ))
+          done
+          [ $NEXT_WAIT_TIME -lt 5 ]
